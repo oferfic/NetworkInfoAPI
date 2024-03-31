@@ -8,7 +8,6 @@ namespace NetworkInfoService.Utils
     /**
     * NetworkInfoBuilder
     *  The class serves as a utility for obtaining the required network info and prepare the required structured output accordingly.
-    *  The class is implemented as a singleton.
     */
     public static class NetworkInfoBuilder
     {
