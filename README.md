@@ -8,8 +8,10 @@ The repository includes:
 Creating and running the docker container: <br />
 
 &nbsp; [Following using docker image named &nbsp; *my_ubuntu_dotnet6_sdk_and_network_info* <br /> &nbsp;&nbsp; and docker container named &nbsp; *my_ubuntu_dotnet6_sdk_and_network_info_container*]
-1. Create the docker image: &nbsp; &nbsp;   *docker build -t my_ubuntu_dotnet6_sdk_and_network_info .*
-2. Create and run the docker container (interactive bash session): &nbsp; &nbsp;   *docker run --cap-add=NET_ADMIN --name my_ubuntu_dotnet6_sdk_and_network_info_container -ti --rm my_ubuntu_dotnet6_sdk_and_network_info /bin/bash*
+1. Compile the VS Project and publish it.
+2. Move/copy the resulted *publish* folder to the folder where the Dockerfile exists (meaning it's a subfolder there).  This subfolder should be named *network_info_service* .
+3. Create the docker image: On the directory where the Dockerfile exists, run the command line: &nbsp; &nbsp;   *docker build -t my_ubuntu_dotnet6_sdk_and_network_info .*
+4. Create and run the docker container (interactive bash session): run the command line: &nbsp; &nbsp;   *docker run --cap-add=NET_ADMIN --name my_ubuntu_dotnet6_sdk_and_network_info_container -ti --rm my_ubuntu_dotnet6_sdk_and_network_info /bin/bash*
 
 <br />
 
