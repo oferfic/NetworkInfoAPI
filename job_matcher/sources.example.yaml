@@ -1,0 +1,39 @@
+# Copy this file to sources.yaml and edit it.
+#
+# Greenhouse and Lever board "tokens" are the slug in the company's public
+# careers URL:
+#   https://job-boards.greenhouse.io/stripe   -> greenhouse token "stripe"
+#   https://jobs.lever.co/figma               -> lever company "figma"
+# Look up a company's careers page to find its token before adding it here.
+
+greenhouse_boards:
+  - stripe
+  - notion
+
+lever_companies:
+  - figma
+
+remoteok:
+  enabled: true
+  tags:
+    - backend
+    - senior
+    - dev
+
+# Only postings whose TITLE contains one of these (case-insensitive) are
+# kept -- this runs before any LLM call, purely to control cost/volume.
+# Leave empty to keep every fetched posting.
+keywords:
+  - backend
+  - platform
+  - infrastructure
+  - "r&d"
+
+# Postings whose title contains one of these are dropped even if they'd
+# otherwise match `keywords`.
+exclude_keywords:
+  - intern
+  - manager, sales
+
+# Safety cap per source, applied before keyword filtering.
+max_jobs_per_source: 50

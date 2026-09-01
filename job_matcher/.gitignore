@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+profile.yaml
+sources.yaml
+report.md
+report.json
+*.report.md
+*.report.json

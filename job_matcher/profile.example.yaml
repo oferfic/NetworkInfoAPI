@@ -1,0 +1,46 @@
+# Copy this file to profile.yaml and edit it. Everything under `background`
+# and `preferences` is passed to the LLM as plain text -- add, remove, or
+# rename fields freely, the matcher doesn't require an exact schema.
+
+background:
+  current_title: "Senior Backend Engineer"
+  years_experience: 8
+  seniority_level: senior           # junior / mid / senior / staff / principal
+  core_skills:
+    - Python
+    - Go
+    - distributed systems
+    - Kubernetes
+    - AWS
+  domains:
+    - fintech
+    - developer tools
+  education: "BSc Computer Science"
+  summary: >
+    8 years building backend/infra systems, most recently leading a small
+    team on a payments platform. Comfortable owning services end to end;
+    limited hands-on frontend experience. Open to R&D / backend / platform
+    roles, not front-end-heavy roles.
+
+preferences:
+  target_roles:
+    - "Backend Engineer"
+    - "R&D Team Lead"
+    - "Staff Engineer"
+  remote_policy: remote_only         # remote_only / hybrid_ok / onsite_ok
+  locations:
+    - Israel
+    - "Remote - EU/Israel timezone"
+  min_salary_usd: 150000
+  company_stage:
+    - seed
+    - series_a
+    - series_b
+  max_company_size: 500
+  deal_breakers:
+    - heavy on-call with no compensation
+    - no equity
+  nice_to_have:
+    - equity
+    - 4-day work week
+    - hardware/embedded exposure
