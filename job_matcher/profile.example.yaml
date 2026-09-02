@@ -40,7 +40,14 @@ preferences:
   deal_breakers:
     - heavy on-call with no compensation
     - no equity
+  # Hard exclusions: if the posting's requirements section explicitly
+  # REQUIRES any of these (not just mentions them in passing, or lists them
+  # as a nice-to-have), the matcher drops the posting -- verdict "not_fit",
+  # regardless of how well anything else matches. Case-insensitive.
+  hard_exclude_requirements:
+    - embedded
+    - DSP
+    - kernel
   nice_to_have:
     - equity
     - 4-day work week
-    - hardware/embedded exposure

@@ -25,10 +25,24 @@ _SYSTEM_PROMPT = """\
 You are a career-fit evaluator helping a candidate triage job postings quickly and honestly.
 
 You will be given:
-1. The candidate's background and preferences.
+1. The candidate's background and preferences, which may include a
+   "hard_exclude_requirements" list.
 2. One job posting: title, company, location, and full description.
 
-Do this:
+Do this, in order:
+0. Hard-exclude check (only if the profile lists hard_exclude_requirements). \
+Locate the requirements/qualifications section (see step 1). For each term in \
+hard_exclude_requirements, check whether the posting states it as something the \
+candidate must actually have/do in this role -- e.g. "X years of embedded \
+development", "strong DSP background", "Linux kernel development experience". \
+Do NOT trigger this for a term that's merely mentioned in passing, listed as a \
+nice-to-have/advantage, describing a team the role collaborates with rather than \
+works in, or part of the product/domain description rather than a skill asked of \
+the candidate. If any term triggers, set "excluded": true, name the exact term and \
+quote or closely paraphrase the triggering requirement text in "excluded_because", \
+set "score": 0 and "verdict": "not_fit", and skip steps 2-5 (leave \
+matched_requirements/missing_requirements/preference_notes as empty lists and give \
+a one-sentence reasoning). Otherwise set "excluded": false and continue.
 1. Locate the requirements/qualifications section within the job description \
 (it may be labeled "Requirements", "Qualifications", "What you'll need", \
 "You have", "Must haves", "Minimum qualifications", etc. -- postings vary). \
@@ -47,6 +61,8 @@ rather than guessing.
 
 Respond with ONLY a single JSON object -- no prose outside it, no markdown fences:
 {
+  "excluded": <bool>,
+  "excluded_because": <string, or null if not excluded>,
   "score": <integer 0-100>,
   "verdict": "strong_fit" | "possible_fit" | "not_fit",
   "matched_requirements": [<short strings: requirements the candidate clearly meets>],
@@ -66,6 +82,8 @@ class MatchResult:
     missing_requirements: list[str] = field(default_factory=list)
     preference_notes: list[str] = field(default_factory=list)
     reasoning: str = ""
+    excluded: bool = False
+    excluded_because: str = ""
     error: str | None = None
 
     @property
@@ -135,6 +153,8 @@ class Matcher:
             missing_requirements=list(data.get("missing_requirements", []) or []),
             preference_notes=list(data.get("preference_notes", []) or []),
             reasoning=str(data.get("reasoning", "")),
+            excluded=bool(data.get("excluded", False)),
+            excluded_because=str(data.get("excluded_because") or ""),
         )
 
 

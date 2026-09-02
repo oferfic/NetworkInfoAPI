@@ -105,6 +105,44 @@ class MatcherTest(unittest.TestCase):
         self.assertFalse(result.ok)
         self.assertEqual(result.verdict, "error")
 
+    @mock.patch("job_matcher.matcher.anthropic.Anthropic")
+    def test_evaluate_marks_hard_excluded_posting(self, mock_anthropic_cls):
+        mock_client = mock.Mock()
+        mock_client.messages.create.return_value = _text_response(
+            {
+                "excluded": True,
+                "excluded_because": "Requires 'embedded': 5+ years embedded development required.",
+                "score": 0,
+                "verdict": "not_fit",
+                "matched_requirements": [],
+                "missing_requirements": [],
+                "preference_notes": [],
+                "reasoning": "Hard-excluded by profile preference.",
+            }
+        )
+        mock_anthropic_cls.return_value = mock_client
+
+        matcher = Matcher(self.profile, api_key="test-key")
+        result = matcher.evaluate(_job())
+
+        self.assertTrue(result.excluded)
+        self.assertIn("embedded", result.excluded_because)
+        self.assertEqual(result.score, 0)
+
+    @mock.patch("job_matcher.matcher.anthropic.Anthropic")
+    def test_evaluate_defaults_excluded_false_when_absent(self, mock_anthropic_cls):
+        mock_client = mock.Mock()
+        mock_client.messages.create.return_value = _text_response(
+            {"score": 60, "verdict": "possible_fit"}
+        )
+        mock_anthropic_cls.return_value = mock_client
+
+        matcher = Matcher(self.profile, api_key="test-key")
+        result = matcher.evaluate(_job())
+
+        self.assertFalse(result.excluded)
+        self.assertEqual(result.excluded_because, "")
+
     def test_missing_api_key_raises(self):
         with mock.patch.dict("os.environ", {}, clear=True):
             with self.assertRaises(RuntimeError):
