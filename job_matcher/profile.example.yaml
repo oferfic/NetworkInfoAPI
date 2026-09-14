@@ -48,6 +48,7 @@ preferences:
     - embedded
     - DSP
     - kernel
+    - OS internals
   nice_to_have:
     - equity
     - 4-day work week

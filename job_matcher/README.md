@@ -19,7 +19,7 @@ section.
 
 Postings that explicitly require something you've hard-excluded (via
 `hard_exclude_requirements` in `profile.yaml`, e.g. `embedded`, `DSP`,
-`kernel`) are left out of the report entirely -- not scored, not listed
+`kernel`, `OS internals`) are left out of the report entirely -- not scored, not listed
 anywhere -- see the comments in `profile.example.yaml`.
 
 No scraping, no browser automation, no ToS-risky sites -- only official

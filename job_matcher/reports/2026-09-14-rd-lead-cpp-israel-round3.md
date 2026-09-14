@@ -1,34 +1,18 @@
 # R&D Team Lead / Tech Lead — Israel, C++ background — round 3 — 2026-09-14
 
-Follow-up search after rounds 1 (2026-09-01) and 2 (2026-09-02). New companies/roles only — deduplicated against both prior reports. Same profile: R&D lead (recent years), senior SW engineer background, broad experience, C++ as major skill among others. Center Israel + surroundings. Per your later refinement, roles that explicitly *require* embedded, DSP, or kernel work are hard-excluded even if C++ is present.
+Follow-up search after rounds 1 (2026-09-01) and 2 (2026-09-02). New companies/roles only — deduplicated against both prior reports. Same profile: R&D lead (recent years), senior SW engineer background, broad experience, C++ as major skill among others. Center Israel + surroundings. Per your later refinement, roles that explicitly *require* embedded, DSP, kernel, or OS internals work are hard-excluded even if C++ is present (this removed Claroty and Sleek from this round; Paragon was also dropped on the same basis). Postings no longer accepting applications are also excluded (removed the Talentedge C++ Tech Lead listing on this basis).
 
 ## Strong matches (C/C++ explicitly required, alongside other skills)
 
-1. **Claroty** — Vulnerability Research Team Lead — Tel Aviv-Yafo
-   Leads a reverse-engineering/vulnerability research team for cyber-physical systems security. Requires proficiency in C/C++ and Python, OS internals (x86/64, ARM, MIPS).
-   https://il.linkedin.com/jobs/view/vulnerability-research-team-lead-at-claroty-4452229264
-
-2. **Sleek** — OS Security Research Team Lead — Ramat Gan
-   Israeli national-security-adjacent cybersecurity firm. Requires hands-on low-level C, C++, Rust; OS internals (Windows/Linux); reverse engineering.
-   https://il.linkedin.com/jobs/view/os-security-research-team-lead-at-sleek-4460891146
-
-3. **Software Team Leader, Database Security** — Hod HaSharon — *posted via Ethosia (recruitment agency); actual employer undisclosed in the listing*
+1. **Software Team Leader, Database Security** — Hod HaSharon — *posted via Ethosia (recruitment agency); actual employer undisclosed in the listing*
    10+ yrs SW dev, extensive hands-on C/C++ on Linux, enterprise security software architecture.
    https://il.linkedin.com/jobs/view/software-team-leader-%E2%80%93-database-security-at-ethosia-4460487426
 
-4. **C++ Tech Lead** — Tel Aviv-Yafo — *posted via Talentedge Ltd (recruitment agency) for an unnamed "growing cyber company"*
-   Leads a team of C++ developers; core requirement is C++/STL/design patterns, cross-cultural team coordination.
-   https://il.linkedin.com/jobs/view/software-team-lead-c%2B%2B-at-talentedge-ltd-3769501408
-
 ## Possible fit — C++ present only as a nice-to-have, not required
 
-5. **Cybord** — Team Lead, R&D — Tel Aviv
+2. **Cybord** — Team Lead, R&D — Tel Aviv
    Primary stack is Python/Java/Go/C#; C++ and GPU programming (CUDA/OpenCL) listed only as "an advantage."
    https://il.linkedin.com/jobs/view/software-team-lead-at-cybord-4462215183
-
-6. **Paragon** — Security Researcher Team Lead — Tel Aviv
-   *Note: commercial cyber-intelligence / surveillance-technology vendor.* Core requirement is reverse engineering/OS internals; C, C++, Rust, Python listed only under "Advantages."
-   https://il.linkedin.com/jobs/view/security-researcher-team-lead-at-paragon-4440570080
 
 ## Could not verify — worth checking manually
 
