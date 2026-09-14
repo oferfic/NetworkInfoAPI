@@ -1,3 +1,4 @@
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,7 +8,9 @@ from job_matcher.config import Profile, SourcesConfig
 
 class SourcesConfigTest(unittest.TestCase):
     def _write(self, content: str) -> Path:
-        tmp = Path(tempfile.mkstemp(suffix=".yaml")[1])
+        fd, name = tempfile.mkstemp(suffix=".yaml")
+        os.close(fd)  # avoid a lingering handle blocking cleanup on Windows
+        tmp = Path(name)
         tmp.write_text(content, encoding="utf-8")
         self.addCleanup(tmp.unlink)
         return tmp

@@ -19,8 +19,8 @@ section.
 
 Postings that explicitly require something you've hard-excluded (via
 `hard_exclude_requirements` in `profile.yaml`, e.g. `embedded`, `DSP`,
-`kernel`) are dropped from the ranked list into their own "Excluded" section
-instead of being scored -- see the comments in `profile.example.yaml`.
+`kernel`) are left out of the report entirely -- not scored, not listed
+anywhere -- see the comments in `profile.example.yaml`.
 
 No scraping, no browser automation, no ToS-risky sites -- only official
 public JSON APIs that Greenhouse, Lever, and RemoteOK expose for their job

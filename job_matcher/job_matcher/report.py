@@ -20,7 +20,6 @@ _VERDICT_EMOJI = {
 
 def write_markdown(results: list[MatchResult], path: str | Path) -> None:
     kept = [r for r in results if not r.excluded]
-    excluded = [r for r in results if r.excluded]
     ranked = sorted(kept, key=lambda r: r.score, reverse=True)
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
@@ -28,8 +27,7 @@ def write_markdown(results: list[MatchResult], path: str | Path) -> None:
         "# Job match report",
         "",
         f"Generated: {generated_at}  ",
-        f"Postings evaluated: {len(results)}"
-        + (f" ({len(excluded)} hard-excluded)" if excluded else ""),
+        f"Postings evaluated: {len(ranked)}",
         "",
     ]
 
@@ -68,18 +66,12 @@ def write_markdown(results: list[MatchResult], path: str | Path) -> None:
         lines.append("---")
         lines.append("")
 
-    if excluded:
-        lines.append("## Excluded (hard filter)")
-        lines.append("")
-        for r in excluded:
-            lines.append(f"- **{r.job.title} @ {r.job.company}** — {r.excluded_because or 'excluded'}")
-        lines.append("")
-
     Path(path).write_text("\n".join(lines), encoding="utf-8")
 
 
 def write_json(results: list[MatchResult], path: str | Path) -> None:
-    ranked = sorted(results, key=lambda r: r.score, reverse=True)
+    kept = [r for r in results if not r.excluded]
+    ranked = sorted(kept, key=lambda r: r.score, reverse=True)
     payload = []
     for r in ranked:
         d = asdict(r)

@@ -1,3 +1,4 @@
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -24,12 +25,14 @@ def _job(**overrides):
 
 class WriteMarkdownTest(unittest.TestCase):
     def _write(self, results):
-        tmp = Path(tempfile.mkstemp(suffix=".md")[1])
+        fd, name = tempfile.mkstemp(suffix=".md")
+        os.close(fd)  # avoid a lingering handle blocking cleanup on Windows
+        tmp = Path(name)
         self.addCleanup(tmp.unlink)
         write_markdown(results, tmp)
         return tmp.read_text(encoding="utf-8")
 
-    def test_excluded_results_go_to_their_own_section_not_ranked_list(self):
+    def test_excluded_results_are_left_out_of_the_report_entirely(self):
         kept = MatchResult(
             job=_job(id="1", title="Backend Engineer"),
             score=80,
@@ -45,16 +48,17 @@ class WriteMarkdownTest(unittest.TestCase):
         text = self._write([kept, dropped])
 
         self.assertIn("Backend Engineer @ Acme", text)
-        self.assertIn("## Excluded (hard filter)", text)
-        self.assertIn("Embedded Engineer @ Acme", text)
-        self.assertIn("Requires 'embedded'", text)
-        # The excluded posting must not appear as a normal ranked "## <emoji> <score>" entry.
-        self.assertNotIn("## 🔴 0 — Embedded Engineer", text)
+        # Excluded postings must not appear anywhere -- no section, no mention.
+        self.assertNotIn("Embedded Engineer", text)
+        self.assertNotIn("Excluded", text)
+        self.assertNotIn("excluded", text)
+        self.assertNotIn("Requires 'embedded'", text)
+        self.assertIn("Postings evaluated: 1", text)
 
     def test_no_excluded_section_when_nothing_excluded(self):
         kept = MatchResult(job=_job(), score=50, verdict="possible_fit")
         text = self._write([kept])
-        self.assertNotIn("Excluded (hard filter)", text)
+        self.assertNotIn("Excluded", text)
 
 
 if __name__ == "__main__":
