@@ -53,12 +53,27 @@ class WriteMarkdownTest(unittest.TestCase):
         self.assertNotIn("Excluded", text)
         self.assertNotIn("excluded", text)
         self.assertNotIn("Requires 'embedded'", text)
-        self.assertIn("Postings evaluated: 1", text)
 
     def test_no_excluded_section_when_nothing_excluded(self):
         kept = MatchResult(job=_job(), score=50, verdict="possible_fit")
         text = self._write([kept])
         self.assertNotIn("Excluded", text)
+
+    def test_not_fit_results_are_left_out_of_the_report(self):
+        fit = MatchResult(
+            job=_job(id="1", title="Backend Engineer"),
+            score=80,
+            verdict="strong_fit",
+        )
+        no_fit = MatchResult(
+            job=_job(id="2", title="Sales Manager"),
+            score=10,
+            verdict="not_fit",
+        )
+        text = self._write([fit, no_fit])
+
+        self.assertIn("Backend Engineer @ Acme", text)
+        self.assertNotIn("Sales Manager", text)
 
 
 if __name__ == "__main__":

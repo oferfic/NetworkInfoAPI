@@ -19,7 +19,10 @@ _VERDICT_EMOJI = {
 
 
 def write_markdown(results: list[MatchResult], path: str | Path) -> None:
-    kept = [r for r in results if not r.excluded]
+    kept = [
+        r for r in results
+        if not r.excluded and r.verdict in ("strong_fit", "possible_fit")
+    ]
     ranked = sorted(kept, key=lambda r: r.score, reverse=True)
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
@@ -27,7 +30,6 @@ def write_markdown(results: list[MatchResult], path: str | Path) -> None:
         "# Job match report",
         "",
         f"Generated: {generated_at}  ",
-        f"Postings evaluated: {len(ranked)}",
         "",
     ]
 
