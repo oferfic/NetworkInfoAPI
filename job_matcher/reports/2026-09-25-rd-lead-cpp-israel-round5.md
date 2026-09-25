@@ -26,15 +26,6 @@ Follow-up after rounds 1-4 (note: rounds 1-4 already exist in `reports/`, so thi
    Requires "a statically typed, compiled language (e.g. C#, Java, Go, C++)" — C++ counts but isn't singled out; role also spans front-end (React/Angular).
    https://il.linkedin.com/jobs/view/r-d-team-leader-at-pathlock-4466500318
 
-## Checked and dropped — no genuine C++ requirement, or hard-excluded
-
-- **Quantum Machines** — Backend Tech Lead — C++ appears in the posting but only describes a *different* team's layer (hardware control); this role's actual requirement is Java/Kotlin.
-- **Oligo Security** — Low-level Engineering Group Manager — "low-level engineering" (kernel/syscall-level runtime security sensor) falls under the spirit of your OS-internals exclusion even though that exact word wasn't in the text; excluded on that basis — flag if you'd like it reconsidered.
-- Hard-excluded (embedded/kernel/firmware/DSP explicitly required): HARMAN International (C++ Technical Lead), PwC NEXT (EDGE Team Lead), DRACO Group (R&D Team Leader), Mertens/מלם תים (Development Team Leader), Gotfriends (Engineering Group Manager), Sandisk (Lead SW Engineer, Software Defined Storage), Gentex (Algorithm Team Leader — CV), Crusoe (Manager, Production Engineering), DT (Lead Backend Engineer).
-- No C++ requirement found: Cyera, Firmus, IVIX, Razor Labs, Axon Pulse, ISI–ImageSat International, OriginAI, IRONSCALES, Alice/ActiveFence, Nagomi Security, Upwind Security, Compie Technologies, Partner Communications, 365Scores, Zero Networks.
-- Excluded by location (Haifa District / north, or Jerusalem District): Elbit Systems Israel (multiple postings), Camtek, KLA, OpticSolution, Regulus, Intel (Haifa), Quantum Source, TriEye, Sartorius, Essence Group, Squaretalk, abra.
-- Not a software leadership role in scope (IC-track staff/principal titles, lab/IT-infra, or non-software): Google (Staff SWE, Filestore), Amazon (Sr. SDE, ElastiCache), Dell (Senior Principal Engineer), Qualcomm (Senior Software Architect), Coinbase (Staff SWE), Harmonic (Lab Support Technical Leader), StoreNext (IT Infrastructure Team Leader).
-
 ## Coverage note
 
 Re-pulled the standard LinkedIn aggregator listings ("C++ Team Leader jobs in Israel", "R&D Team Leader jobs in Israel") for postings newer than round 4 (2026-09-14), plus new query angles not tried before: low-latency/trading C++, storage C++ team lead, networking C++ team lead. 133 unique postings scanned; 69 were at companies/roles not yet checked in rounds 1-4; the above is the full disposition of those 69.
