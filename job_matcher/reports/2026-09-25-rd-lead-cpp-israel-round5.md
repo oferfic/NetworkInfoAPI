@@ -25,7 +25,3 @@ Follow-up after rounds 1-4 (note: rounds 1-4 already exist in `reports/`, so thi
 5. **Pathlock** — R&D Team Leader (full-stack Scrum team) — Israel (remote/hybrid, exact city not specified)
    Requires "a statically typed, compiled language (e.g. C#, Java, Go, C++)" — C++ counts but isn't singled out; role also spans front-end (React/Angular).
    https://il.linkedin.com/jobs/view/r-d-team-leader-at-pathlock-4466500318
-
-## Coverage note
-
-Re-pulled the standard LinkedIn aggregator listings ("C++ Team Leader jobs in Israel", "R&D Team Leader jobs in Israel") for postings newer than round 4 (2026-09-14), plus new query angles not tried before: low-latency/trading C++, storage C++ team lead, networking C++ team lead. 133 unique postings scanned; 69 were at companies/roles not yet checked in rounds 1-4; the above is the full disposition of those 69.
