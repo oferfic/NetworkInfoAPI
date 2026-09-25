@@ -1,7 +1,5 @@
 # R&D Team Lead / Tech Lead — Israel, C++ background — round 5 — 2026-09-25
 
-Follow-up after rounds 1-4 (note: rounds 1-4 already exist in `reports/`, so this is round 5, not round 4). New companies/roles only, deduplicated against all prior reports. Same profile and hard exclusions (embedded, DSP, kernel, OS internals explicitly required; closed/stale postings; center Israel + surroundings).
-
 ## Strong matches (C/C++ explicitly required, alongside other skills)
 
 1. **Amazon Web Services** — Software Development Manager, EBS Data Plane (Durability Engine) — Tel Aviv-Yafo
