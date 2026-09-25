@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,19 +18,47 @@ _VERDICT_EMOJI = {
     "unknown": "❔",
 }
 
+# This subject line and filename slug are specific to the R&D team lead /
+# tech lead / C++ / Israel search this tool has been run for -- update them
+# directly if the search's profile changes.
+REPORT_SUBJECT = "R&D Team Lead / Tech Lead — Israel, C++ background"
+REPORT_SLUG = "rd-lead-cpp-israel"
 
-def write_markdown(results: list[MatchResult], path: str | Path) -> None:
+_ROUND_RE = re.compile(re.escape(REPORT_SLUG) + r"-round(\d+)\.md$")
+
+
+def next_round_number(reports_dir: str | Path) -> int:
+    """Inspect `reports_dir` for existing `...-round<N>.md` reports and
+    return the next round number (1 if none exist yet)."""
+    dir_path = Path(reports_dir)
+    if not dir_path.is_dir():
+        return 1
+    found = [
+        int(m.group(1))
+        for f in dir_path.iterdir()
+        if (m := _ROUND_RE.search(f.name))
+    ]
+    return max(found, default=0) + 1
+
+
+def default_report_path(reports_dir: str | Path, round_num: int) -> Path:
+    """Build the standard `<date>-<slug>-round<N>.md` path for this search."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return Path(reports_dir) / f"{today}-{REPORT_SLUG}-round{round_num}.md"
+
+
+def write_markdown(
+    results: list[MatchResult], path: str | Path, round_num: int
+) -> None:
     kept = [
         r for r in results
         if not r.excluded and r.verdict in ("strong_fit", "possible_fit")
     ]
     ranked = sorted(kept, key=lambda r: r.score, reverse=True)
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     lines: list[str] = [
-        "# Job match report",
-        "",
-        f"Generated: {generated_at}  ",
+        f"# {REPORT_SUBJECT} — round {round_num} — {today}",
         "",
     ]
 

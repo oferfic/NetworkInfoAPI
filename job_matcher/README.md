@@ -51,9 +51,13 @@ python -m job_matcher.cli run
 Options:
 
 ```
---profile PATH        path to profile.yaml (default: profile.yaml)
+--profile PATH         path to profile.yaml (default: profile.yaml)
 --sources PATH         path to sources.yaml (default: sources.yaml)
---output PATH          markdown report path (default: report.md)
+--output PATH          markdown report path (default: auto-named into
+                        --reports-dir as <date>-rd-lead-cpp-israel-round<N>.md,
+                        N picked automatically from what's already there)
+--reports-dir PATH     directory for round-numbering and the auto-named
+                        report (default: reports; ignored if --output is set)
 --json-output PATH     also write raw results as JSON
 --model MODEL_ID       Claude model to use (default: claude-sonnet-5)
 --limit N              cap how many postings get evaluated (useful for a dry run)

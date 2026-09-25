@@ -1,8 +1,11 @@
 """Command-line entry point.
 
 Usage:
-    python -m job_matcher.cli run \\
-        --profile profile.yaml --sources sources.yaml --output report.md
+    python -m job_matcher.cli run --profile profile.yaml --sources sources.yaml
+
+By default the report is auto-named into --reports-dir (default "reports")
+as <date>-rd-lead-cpp-israel-round<N>.md, with N picked automatically from
+what's already in that directory. Pass --output to override.
 """
 
 from __future__ import annotations
@@ -11,6 +14,7 @@ import argparse
 import logging
 import sys
 import time
+from pathlib import Path
 
 try:
     from dotenv import load_dotenv
@@ -21,7 +25,7 @@ except ImportError:
 
 from .config import Profile, SourcesConfig
 from .matcher import DEFAULT_MODEL, Matcher
-from .report import write_json, write_markdown
+from .report import default_report_path, next_round_number, write_json, write_markdown
 from .sources import JobPosting
 from .sources import greenhouse, lever, remoteok
 
@@ -91,7 +95,14 @@ def cmd_run(args: argparse.Namespace) -> int:
         if args.delay:
             time.sleep(args.delay)
 
-    write_markdown(results, args.output)
+    reports_dir = Path(args.reports_dir)
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    round_num = next_round_number(reports_dir)
+    output_path = (
+        Path(args.output) if args.output else default_report_path(reports_dir, round_num)
+    )
+
+    write_markdown(results, output_path, round_num=round_num)
     if args.json_output:
         write_json(results, args.json_output)
 
@@ -102,7 +113,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     print(
         f"Done. {len(results)} evaluated: {strong} strong fit, "
         f"{possible} possible fit, {excluded} hard-excluded, "
-        f"{errors} errors. Report: {args.output}"
+        f"{errors} errors. Report (round {round_num}): {output_path}"
     )
     return 0
 
@@ -120,7 +131,18 @@ def build_parser() -> argparse.ArgumentParser:
     run = sub.add_parser("run", help="Fetch postings and score them.")
     run.add_argument("--profile", default="profile.yaml", help="Path to profile.yaml")
     run.add_argument("--sources", default="sources.yaml", help="Path to sources.yaml")
-    run.add_argument("--output", default="report.md", help="Markdown report path")
+    run.add_argument(
+        "--output",
+        default=None,
+        help="Markdown report path. Default: auto-named in --reports-dir as "
+        "<date>-rd-lead-cpp-israel-round<N>.md, N picked automatically.",
+    )
+    run.add_argument(
+        "--reports-dir",
+        default="reports",
+        help="Directory to scan for existing round numbers and to write the "
+        "auto-named report into (ignored if --output is given explicitly).",
+    )
     run.add_argument(
         "--json-output", default=None, help="Optional path to also write raw JSON"
     )
