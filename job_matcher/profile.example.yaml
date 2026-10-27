@@ -48,7 +48,9 @@ preferences:
     - embedded
     - DSP
     - kernel
-    - OS internals
+    - drivers
+    - OS internals (incl. Windows internals, Linux internals)
+    - system-level / low-level programming
     - GPU / HW accelerators
     - memory systems / HW-SW interaction
   # Language gate (OR logic): keep a posting if EITHER

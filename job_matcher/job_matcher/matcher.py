@@ -35,6 +35,9 @@ Locate the requirements/qualifications section (see step 1). For each term in \
 hard_exclude_requirements, check whether the posting states it as something the \
 candidate must actually have/do in this role -- e.g. "X years of embedded \
 development", "strong DSP background", "Linux kernel development experience". \
+Match each term by meaning, not exact wording: close equivalents count (e.g. \
+"Windows internals" or "Linux internals" for OS internals, "drivers" or \
+"low-level/system-level programming" for kernel/system-level work). \
 Do NOT trigger this for a term that's merely mentioned in passing, listed as a \
 nice-to-have/advantage, describing a team the role collaborates with rather than \
 works in, or part of the product/domain description rather than a skill asked of \
@@ -57,7 +60,9 @@ A posting that names programming languages but none of required_languages \
 (e.g. only Python/Java/Go) fails the gate. If it fails, set "excluded": true, \
 "excluded_because": "Language gate: <short reason>", "qualified_via": null, \
 "score": 0, "verdict": "not_fit", and skip steps 1-5 as in step 0. Step 0's \
-hard exclusions apply to both paths. With no language_gate section, set \
+hard exclusions apply to both paths -- a posting with no language requirement \
+that still requires e.g. kernel, system-level, or Windows/OS internals work \
+must already have been excluded in step 0, never passed via (b). With no language_gate section, set \
 "qualified_via": null and continue.
 1. Locate the requirements/qualifications section within the job description \
 (it may be labeled "Requirements", "Qualifications", "What you'll need", \
