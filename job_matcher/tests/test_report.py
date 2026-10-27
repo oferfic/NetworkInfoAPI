@@ -75,6 +75,22 @@ class WriteMarkdownTest(unittest.TestCase):
         self.assertIn("Backend Engineer @ Acme", text)
         self.assertNotIn("Sales Manager", text)
 
+    def test_language_agnostic_leadership_is_flagged(self):
+        agnostic = MatchResult(
+            job=_job(id="1", title="R&D Team Lead"),
+            score=70,
+            verdict="possible_fit",
+            qualified_via="language_agnostic_leadership",
+        )
+        cpp = MatchResult(
+            job=_job(id="2", title="C++ Team Lead"),
+            score=80,
+            verdict="strong_fit",
+            qualified_via="required_language",
+        )
+        text = self._write([agnostic, cpp])
+        self.assertEqual(text.count("No specific programming language required"), 1)
+
     def test_title_includes_round_number(self):
         kept = MatchResult(job=_job(), score=80, verdict="strong_fit")
         text = self._write([kept], round_num=3)

@@ -26,7 +26,7 @@ You are a career-fit evaluator helping a candidate triage job postings quickly a
 
 You will be given:
 1. The candidate's background and preferences, which may include a
-   "hard_exclude_requirements" list.
+   "hard_exclude_requirements" list and a "language_gate" section.
 2. One job posting: title, company, location, and full description.
 
 Do this, in order:
@@ -43,6 +43,22 @@ quote or closely paraphrase the triggering requirement text in "excluded_because
 set "score": 0 and "verdict": "not_fit", and skip steps 2-5 (leave \
 matched_requirements/missing_requirements/preference_notes as empty lists and give \
 a one-sentence reasoning). Otherwise set "excluded": false and continue.
+0b. Language gate (only if the profile has a "language_gate" section). The \
+posting passes if EITHER:
+  (a) its requirements ask for at least one of language_gate.required_languages \
+-- anywhere in the requirements, even as a nice-to-have/advantage (score it lower \
+if it's not a hard requirement). Set "qualified_via": "required_language". OR
+  (b) language_gate.allow_language_agnostic_leadership is true, the role is a \
+team lead / tech lead / engineering manager of an R&D team, and its requirements \
+name NO specific programming language at all (generic phrases like "strong \
+software engineering background" or "hands-on coding" don't name one). Set \
+"qualified_via": "language_agnostic_leadership".
+A posting that names programming languages but none of required_languages \
+(e.g. only Python/Java/Go) fails the gate. If it fails, set "excluded": true, \
+"excluded_because": "Language gate: <short reason>", "qualified_via": null, \
+"score": 0, "verdict": "not_fit", and skip steps 1-5 as in step 0. Step 0's \
+hard exclusions apply to both paths. With no language_gate section, set \
+"qualified_via": null and continue.
 1. Locate the requirements/qualifications section within the job description \
 (it may be labeled "Requirements", "Qualifications", "What you'll need", \
 "You have", "Must haves", "Minimum qualifications", etc. -- postings vary). \
@@ -63,6 +79,7 @@ Respond with ONLY a single JSON object -- no prose outside it, no markdown fence
 {
   "excluded": <bool>,
   "excluded_because": <string, or null if not excluded>,
+  "qualified_via": "required_language" | "language_agnostic_leadership" | null,
   "score": <integer 0-100>,
   "verdict": "strong_fit" | "possible_fit" | "not_fit",
   "matched_requirements": [<short strings: requirements the candidate clearly meets>],
@@ -84,6 +101,7 @@ class MatchResult:
     reasoning: str = ""
     excluded: bool = False
     excluded_because: str = ""
+    qualified_via: str = ""
     error: str | None = None
 
     @property
@@ -155,6 +173,7 @@ class Matcher:
             reasoning=str(data.get("reasoning", "")),
             excluded=bool(data.get("excluded", False)),
             excluded_because=str(data.get("excluded_because") or ""),
+            qualified_via=str(data.get("qualified_via") or ""),
         )
 
 

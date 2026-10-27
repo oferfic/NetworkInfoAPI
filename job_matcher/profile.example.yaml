@@ -49,6 +49,20 @@ preferences:
     - DSP
     - kernel
     - OS internals
+    - GPU / HW accelerators
+    - memory systems / HW-SW interaction
+  # Language gate (OR logic): keep a posting if EITHER
+  #   (a) its requirements ask for one of `required_languages` (even as a
+  #       nice-to-have -- scored lower), OR
+  #   (b) `allow_language_agnostic_leadership` is true and it's a team lead /
+  #       tech lead role whose requirements name no programming language.
+  # A posting naming only other languages (e.g. just Python/Java) is dropped.
+  # hard_exclude_requirements still apply to both paths. Remove this section
+  # to disable the gate.
+  language_gate:
+    required_languages:
+      - C++
+    allow_language_agnostic_leadership: true
   nice_to_have:
     - equity
     - 4-day work week

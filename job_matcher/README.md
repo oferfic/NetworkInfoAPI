@@ -22,6 +22,12 @@ Postings that explicitly require something you've hard-excluded (via
 `kernel`, `OS internals`) are left out of the report entirely -- not scored, not listed
 anywhere -- see the comments in `profile.example.yaml`.
 
+An optional `language_gate` in `profile.yaml` keeps a posting only if it
+requires one of your `required_languages` (e.g. C++) **or** -- with
+`allow_language_agnostic_leadership: true` -- it's a team/tech lead role
+whose requirements name no programming language at all. Postings that name
+only other languages are dropped the same way as hard exclusions.
+
 No scraping, no browser automation, no ToS-risky sites -- only official
 public JSON APIs that Greenhouse, Lever, and RemoteOK expose for their job
 boards.

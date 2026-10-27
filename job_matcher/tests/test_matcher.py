@@ -142,6 +142,47 @@ class MatcherTest(unittest.TestCase):
 
         self.assertFalse(result.excluded)
         self.assertEqual(result.excluded_because, "")
+        self.assertEqual(result.qualified_via, "")
+
+    @mock.patch("job_matcher.matcher.anthropic.Anthropic")
+    def test_evaluate_parses_language_agnostic_leadership(self, mock_anthropic_cls):
+        mock_client = mock.Mock()
+        mock_client.messages.create.return_value = _text_response(
+            {
+                "excluded": False,
+                "qualified_via": "language_agnostic_leadership",
+                "score": 70,
+                "verdict": "possible_fit",
+            }
+        )
+        mock_anthropic_cls.return_value = mock_client
+
+        matcher = Matcher(self.profile, api_key="test-key")
+        result = matcher.evaluate(_job(title="R&D Team Lead"))
+
+        self.assertFalse(result.excluded)
+        self.assertEqual(result.qualified_via, "language_agnostic_leadership")
+
+    @mock.patch("job_matcher.matcher.anthropic.Anthropic")
+    def test_evaluate_marks_language_gate_failure_excluded(self, mock_anthropic_cls):
+        mock_client = mock.Mock()
+        mock_client.messages.create.return_value = _text_response(
+            {
+                "excluded": True,
+                "excluded_because": "Language gate: requires Python/Go only, no C++.",
+                "qualified_via": None,
+                "score": 0,
+                "verdict": "not_fit",
+            }
+        )
+        mock_anthropic_cls.return_value = mock_client
+
+        matcher = Matcher(self.profile, api_key="test-key")
+        result = matcher.evaluate(_job())
+
+        self.assertTrue(result.excluded)
+        self.assertIn("Language gate", result.excluded_because)
+        self.assertEqual(result.qualified_via, "")
 
     def test_missing_api_key_raises(self):
         with mock.patch.dict("os.environ", {}, clear=True):

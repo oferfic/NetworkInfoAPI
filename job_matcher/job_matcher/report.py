@@ -78,6 +78,9 @@ def write_markdown(
             lines.append("")
             continue
 
+        if r.qualified_via == "language_agnostic_leadership":
+            lines.append("*No specific programming language required.*")
+            lines.append("")
         if r.reasoning:
             lines.append(r.reasoning)
             lines.append("")
