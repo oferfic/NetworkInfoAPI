@@ -17,3 +17,15 @@
 4. **Anecdotes** — R&D TL, Agents Platform — Tel Aviv
    5+ yrs SW, 2+ yrs tech leadership, distributed systems/cloud. Gap: hands-on shipping LLM products/agents is a must; Python only as advantage.
    https://il.linkedin.com/jobs/view/r-d-tl-agents-platform-at-anecdotes-4478348011
+
+5. **Oligo Security** — Software Engineering Team Lead — Tel Aviv (on-site)
+   3+ yrs leading 5+ engineers, 6+ yrs cloud backend; PostgreSQL/Kafka/Redis, AWS, Kubernetes; customer-facing experience.
+   https://www.oligo.security/positions/position-07_753
+
+6. **Tulip** — Engineering Team Lead — Tel Aviv (hybrid)
+   No language named; backend infrastructure and SaaS "ideally", multicloud/multitenant environments.
+   https://tulip.co/careers/job-posting/?gh_jid=8006363003
+
+7. **Similarweb** — Principal Tech Lead (Backend oriented) — Tel Aviv
+   Senior IC tech-lead role: architect large-scale distributed backend, mentor seniors. Gap: heavy emphasis on agentic engineering / LLM tooling.
+   https://job-boards.greenhouse.io/similarweb/jobs/8041082
