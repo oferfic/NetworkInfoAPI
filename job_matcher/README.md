@@ -17,7 +17,8 @@ section.
    requirements section, compare it to your background, and rate the fit.
 4. You get a Markdown report (and optionally raw JSON), grouped by fit
    level (Strong / Possible / Weak) and, within each, by category (C++
-   Team/Tech Lead, C++ Senior, Team/Tech Lead with no specific SW language),
+   Team/Tech Lead, C++ Senior, Team/Tech Lead with no specific SW language,
+   Project / Product Manager),
    ranked by score, with per-posting matched requirements, gaps, and
    preference notes. Empty levels/categories are omitted.
 
@@ -35,7 +36,10 @@ requires one of your `required_languages` (e.g. C++) and is a team/tech lead
 role -- or, with `allow_senior_engineer_roles: true`, a senior software
 engineer/developer role -- **or** -- with
 `allow_language_agnostic_leadership: true` -- it's a team/tech lead role
-whose requirements name no programming language at all. Postings that name
+whose requirements name no programming language at all -- **or** -- with
+`allow_project_product_manager_roles: true` -- it's a project/product manager
+role that does not require prior PM experience (open to an R&D lead moving
+in). Postings that name
 only other languages are dropped the same way as hard exclusions. Hard
 exclusions apply to all paths, so a lead or senior role is still dropped if
 it *requires* kernel, system-level, or OS/Windows internals work (as a

@@ -38,6 +38,7 @@ _CATEGORIES = [
     ("required_language_lead", "C++ Team/Tech Lead"),
     ("required_language_senior", "C++ Senior"),
     ("language_agnostic_leadership", "Team/Tech Lead, no specific SW language"),
+    ("project_product_manager", "Project / Product Manager"),
     ("", "Other"),
 ]
 # Older results recorded the C++ path without the lead/senior split.

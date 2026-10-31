@@ -65,7 +65,14 @@ via (a). OR
 team lead / tech lead / engineering manager of an R&D team, and its requirements \
 name NO specific programming language at all (generic phrases like "strong \
 software engineering background" or "hands-on coding" don't name one). Set \
-"qualified_via": "language_agnostic_leadership".
+"qualified_via": "language_agnostic_leadership". OR
+  (c) language_gate.allow_project_product_manager_roles is true, the role is a \
+project manager or product manager role, and it does NOT require prior \
+project/product-management experience (years as a PM, managing projects with \
+budgets/customers, etc.) -- i.e. it is open to someone moving into it from an \
+R&D team/tech lead background, and its degree requirement accepts CS/software. \
+Set "qualified_via": "project_product_manager". A PM role that requires PM \
+experience fails the gate.
 A posting that names programming languages but none of required_languages \
 (e.g. only Python/Java/Go) fails the gate. If it fails, set "excluded": true, \
 "excluded_because": "Language gate: <short reason>", "qualified_via": null, \
@@ -95,7 +102,7 @@ Respond with ONLY a single JSON object -- no prose outside it, no markdown fence
 {
   "excluded": <bool>,
   "excluded_because": <string, or null if not excluded>,
-  "qualified_via": "required_language_lead" | "required_language_senior" | "language_agnostic_leadership" | null,
+  "qualified_via": "required_language_lead" | "required_language_senior" | "language_agnostic_leadership" | "project_product_manager" | null,
   "score": <integer 0-100>,
   "verdict": "strong_fit" | "possible_fit" | "weak_fit" | "not_fit",
   "matched_requirements": [<short strings: requirements the candidate clearly meets>],

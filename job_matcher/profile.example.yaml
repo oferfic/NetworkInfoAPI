@@ -64,7 +64,10 @@ preferences:
   #       or -- with `allow_senior_engineer_roles: true` -- a senior software
   #       engineer/developer role, OR
   #   (b) `allow_language_agnostic_leadership` is true and it's a team lead /
-  #       tech lead role whose requirements name no programming language.
+  #       tech lead role whose requirements name no programming language, OR
+  #   (c) `allow_project_product_manager_roles` is true and it's a project /
+  #       product manager role that does NOT require prior PM experience
+  #       (open to moving in from an R&D lead role) and accepts a CS degree.
   # A posting naming only other languages (e.g. just Python/Java) is dropped.
   # hard_exclude_requirements still apply to all paths. Remove this section
   # to disable the gate.
@@ -73,6 +76,7 @@ preferences:
       - C++
     allow_senior_engineer_roles: true
     allow_language_agnostic_leadership: true
+    allow_project_product_manager_roles: true
   nice_to_have:
     - equity
     - 4-day work week

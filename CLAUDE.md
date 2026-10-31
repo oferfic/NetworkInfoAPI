@@ -9,9 +9,10 @@ When asked for a new round report:
 - **Read each candidate posting** (requirements, not just the title) before including it.
 - **Filters** (see `job_matcher/profile.example.yaml` `language_gate` / `hard_exclude_requirements`):
   - (a) requires C++ (even as an advantage, scored lower) AND role is R&D Team/Tech Lead **or** Senior SW Engineer/Developer; OR
-  - (b) R&D Team/Tech Lead whose requirements name no specific programming language.
+  - (b) R&D Team/Tech Lead whose requirements name no specific programming language; OR
+  - (c) Project/Product Manager role (any source) that does **not** require prior project/product-management experience — i.e. it allows a move from R&D lead — and accepts a CS degree. Drop PM roles that require PM experience.
   - Drop postings (from ANY source) that *require* (not merely list as nice-to-have) embedded, DSP, kernel, drivers, system-level/low-level work, OS/Windows/Linux internals, GPU/HW accelerators, HW-SW interaction, **real-time (RT/RTOS)**, **computer vision / image processing**, or robotics/control systems. A term in the job title counts as required.
   - Drop Group-Manager-level roles that require managing team leads, and hardware/RF/system-integration roles (not software).
   - Location: center Israel only (exclude Haifa and north, Jerusalem, Beer Sheva and south; Ashdod is acceptable as the southern edge). Drop closed postings.
-- **Layout:** `## Strong fit` / `## Possible fit` / `## Weak fit`, each split into `### C++ Team/Tech Lead`, `### C++ Senior`, `### Team/Tech Lead, no specific SW language`. Omit empty levels/subsections. No "checked and dropped" section; keep entries short.
+- **Layout:** `## Strong fit` / `## Possible fit` / `## Weak fit`, each split into `### C++ Team/Tech Lead`, `### C++ Senior`, `### Team/Tech Lead, no specific SW language`, `### Project / Product Manager`. Omit empty levels/subsections. No "checked and dropped" section; keep entries short.
 - **Commit and push** the report when done.
