@@ -3,3 +3,8 @@
 bin/**
 obj/**
 PublishProfiles/**
+
+# Browser exports for job_matcher (may contain session data)
+*.har
+iai_import/
+job_matcher/iai_import/
