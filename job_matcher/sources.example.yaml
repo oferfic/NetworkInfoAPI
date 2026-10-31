@@ -20,6 +20,18 @@ remoteok:
     - senior
     - dev
 
+# Elbit Systems' own careers site (public JSON feed, ~500+ jobs). `areas`
+# keeps only these values of the feed's region field -- the feed also has
+# North, Haifa, South and "Jerusalem Area". `max_jobs` replaces
+# max_jobs_per_source for this (large) source.
+elbit:
+  enabled: true
+  areas:
+    - Center
+    - Sharon
+    - Shfela
+  max_jobs: 1000
+
 # Only postings whose TITLE contains one of these (case-insensitive) are
 # kept -- this runs before any LLM call, purely to control cost/volume.
 # Leave empty to keep every fetched posting.

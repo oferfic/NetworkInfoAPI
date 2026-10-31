@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from job_matcher.sources import greenhouse, lever, remoteok
+from job_matcher.sources import elbit, greenhouse, lever, remoteok
 
 
 def _mock_response(json_data, status=200):
@@ -131,6 +131,58 @@ class RemoteOkSourceTest(unittest.TestCase):
         )
         jobs = remoteok.fetch_jobs()
         self.assertEqual(len(jobs), 2)
+
+
+class ElbitSourceTest(unittest.TestCase):
+    _FEED = [
+        {
+            "jobId": 101,
+            "jobTitle": "Software Team Lead",
+            "jobCode": "7001",
+            "area": "Center",
+            # The feed HTML-escapes its HTML markup.
+            "description": "&lt;div&gt;Lead a C++ team&lt;/div&gt;",
+            "requirements": "&lt;ul&gt;&lt;li&gt;5+ years C++&lt;/li&gt;&lt;/ul&gt;",
+            "skills": "",
+            "openDate": "2026-10-01T00:00:00",
+            "updateDate": "2026-10-20T00:00:00",
+        },
+        {
+            "jobId": 102,
+            "jobTitle": "Navigation Engineer",
+            "jobCode": "7002",
+            "area": "Haifa",
+            "description": "",
+            "requirements": "",
+            "skills": "",
+        },
+    ]
+
+    @mock.patch("job_matcher.sources.elbit.requests.get")
+    def test_fetch_jobs_normalizes_fields(self, mock_get):
+        mock_get.return_value = _mock_response(self._FEED)
+
+        jobs = elbit.fetch_jobs()
+
+        self.assertEqual(len(jobs), 2)
+        job = jobs[0]
+        self.assertEqual(job.id, "101")
+        self.assertEqual(job.company, "Elbit Systems")
+        self.assertEqual(job.source, "elbit")
+        self.assertEqual(job.location, "Center")
+        self.assertIn("Lead a C++ team", job.description)
+        self.assertIn("5+ years C++", job.description)
+        self.assertNotIn("<", job.description)
+        self.assertIn("7001", job.description)
+        self.assertEqual(job.posted_at, "2026-10-20T00:00:00")
+
+    @mock.patch("job_matcher.sources.elbit.requests.get")
+    def test_fetch_jobs_filters_by_area(self, mock_get):
+        mock_get.return_value = _mock_response(self._FEED)
+
+        jobs = elbit.fetch_jobs(areas=["center", "Sharon"])
+
+        self.assertEqual([j.id for j in jobs], ["101"])
 
 
 if __name__ == "__main__":

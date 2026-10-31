@@ -53,6 +53,11 @@ preferences:
     - system-level / low-level programming
     - GPU / HW accelerators
     - memory systems / HW-SW interaction
+    - real-time (RT) systems / RTOS
+    - computer vision / image processing
+    - robotics (ROS) / control systems
+    - hardware, RF or system integration (non-software roles)
+    - managing team leads / multiple teams (group-manager level)
   # Language gate (OR logic): keep a posting if EITHER
   #   (a) its requirements ask for one of `required_languages` (even as a
   #       nice-to-have -- scored lower) AND it's a team lead / tech lead role,

@@ -27,7 +27,7 @@ from .config import Profile, SourcesConfig
 from .matcher import DEFAULT_MODEL, Matcher
 from .report import default_report_path, next_round_number, write_json, write_markdown
 from .sources import JobPosting
-from .sources import greenhouse, lever, remoteok
+from .sources import elbit, greenhouse, lever, remoteok
 
 logger = logging.getLogger("job_matcher")
 
@@ -36,9 +36,9 @@ def _fetch_all(sources: SourcesConfig) -> list[JobPosting]:
     jobs: list[JobPosting] = []
     seen: set[str] = set()
 
-    def _collect(fetched: list[JobPosting], label: str) -> None:
+    def _collect(fetched: list[JobPosting], label: str, cap: int | None = None) -> None:
         kept = 0
-        for job in fetched[: sources.max_jobs_per_source]:
+        for job in fetched[: cap or sources.max_jobs_per_source]:
             if not sources.title_matches_keywords(job.title):
                 continue
             fp = job.fingerprint()
@@ -69,6 +69,16 @@ def _fetch_all(sources: SourcesConfig) -> list[JobPosting]:
             _collect(fetched, "remoteok")
         except Exception as exc:  # noqa: BLE001
             logger.error("Failed to fetch remoteok: %s", exc)
+
+    if sources.elbit_enabled:
+        try:
+            _collect(
+                elbit.fetch_jobs(areas=sources.elbit_areas),
+                "elbit",
+                cap=sources.elbit_max_jobs,
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.error("Failed to fetch elbit: %s", exc)
 
     return jobs
 

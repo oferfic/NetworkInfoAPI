@@ -56,6 +56,9 @@ class SourcesConfig:
     lever_companies: list[str] = field(default_factory=list)
     remoteok_enabled: bool = False
     remoteok_tags: list[str] = field(default_factory=list)
+    elbit_enabled: bool = False
+    elbit_areas: list[str] = field(default_factory=list)
+    elbit_max_jobs: int = 1000
     keywords: list[str] = field(default_factory=list)
     exclude_keywords: list[str] = field(default_factory=list)
     max_jobs_per_source: int = 50
@@ -64,11 +67,15 @@ class SourcesConfig:
     def load(cls, path: str | Path) -> "SourcesConfig":
         data = _load_yaml(path)
         remoteok = data.get("remoteok") or {}
+        elbit = data.get("elbit") or {}
         return cls(
             greenhouse_boards=list(data.get("greenhouse_boards") or []),
             lever_companies=list(data.get("lever_companies") or []),
             remoteok_enabled=bool(remoteok.get("enabled", False)),
             remoteok_tags=list(remoteok.get("tags") or []),
+            elbit_enabled=bool(elbit.get("enabled", False)),
+            elbit_areas=list(elbit.get("areas") or []),
+            elbit_max_jobs=int(elbit.get("max_jobs", 1000)),
             keywords=[k.lower() for k in (data.get("keywords") or [])],
             exclude_keywords=[
                 k.lower() for k in (data.get("exclude_keywords") or [])

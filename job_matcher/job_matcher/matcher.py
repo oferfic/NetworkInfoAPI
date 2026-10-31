@@ -37,7 +37,12 @@ candidate must actually have/do in this role -- e.g. "X years of embedded \
 development", "strong DSP background", "Linux kernel development experience". \
 Match each term by meaning, not exact wording: close equivalents count (e.g. \
 "Windows internals" or "Linux internals" for OS internals, "drivers" or \
-"low-level/system-level programming" for kernel/system-level work). \
+"low-level/system-level programming" for kernel/system-level work, "RT", \
+"RTOS" or "real-time systems experience" for real-time, "image processing" or \
+"CV algorithms" for computer vision). A term in the job TITLE (e.g. "RT \
+Embedded Software Engineer", "Real Time Computer Vision Developer") counts as \
+required. "Managing team leads / leading multiple teams" required of the \
+candidate (group-manager level) also triggers if listed. \
 Do NOT trigger this for a term that's merely mentioned in passing, listed as a \
 nice-to-have/advantage, describing a team the role collaborates with rather than \
 works in, or part of the product/domain description rather than a skill asked of \

@@ -9,7 +9,8 @@ section.
 
 1. You describe your background and preferences once, in `profile.yaml`.
 2. You list which companies/boards to pull from in `sources.yaml`
-   (Greenhouse and Lever company boards, plus RemoteOK), with optional
+   (Greenhouse and Lever company boards, Elbit Systems' careers feed, plus
+   RemoteOK), with optional
    keyword filters to control volume.
 3. `job_matcher run` fetches postings, sends each one (title + full
    description) to Claude alongside your profile, and asks it to locate the
@@ -22,8 +23,12 @@ section.
 
 Postings that explicitly require something you've hard-excluded (via
 `hard_exclude_requirements` in `profile.yaml`, e.g. `embedded`, `DSP`,
-`kernel`, `OS internals`, `Windows internals`, `system-level`) are left out of the report entirely -- not scored, not listed
-anywhere -- see the comments in `profile.example.yaml`.
+`kernel`, `OS internals`, `Windows internals`, `system-level`, `real-time`,
+`computer vision`) are left out of the report entirely -- not scored, not
+listed anywhere -- see the comments in `profile.example.yaml`. These apply to
+every source, and a term in the job *title* (e.g. "RT Embedded …", "Real Time
+Computer Vision …") counts as required. Group-manager roles that require
+managing team leads are excluded the same way.
 
 An optional `language_gate` in `profile.yaml` keeps a posting only if it
 requires one of your `required_languages` (e.g. C++) and is a team/tech lead
@@ -36,9 +41,9 @@ exclusions apply to all paths, so a lead or senior role is still dropped if
 it *requires* kernel, system-level, or OS/Windows internals work (as a
 nice-to-have it's fine).
 
-No scraping, no browser automation, no ToS-risky sites -- only official
-public JSON APIs that Greenhouse, Lever, and RemoteOK expose for their job
-boards.
+No scraping, no browser automation, no ToS-risky sites -- only public JSON
+feeds: the APIs Greenhouse, Lever, and RemoteOK expose for their job boards,
+and the feed Elbit's own careers site loads its jobs from.
 
 ## Round reports (`reports/*-roundN.md`) — mandatory rules
 
@@ -51,12 +56,18 @@ every round:
 - Greenhouse public board API for Israeli tech companies
   (`boards-api.greenhouse.io/v1/boards/<token>/jobs?content=true`)
 - Lever public postings API (`api.lever.co/v0/postings/<company>`)
+- **Elbit Systems' own careers feed**
+  (`https://elbitsystemscareer.com/cron/jobs.json`, ~500+ jobs with full
+  descriptions; keep `area` Center / Sharon / Shfela). Read each relevant
+  posting and apply the hard exclusions (real-time, computer vision,
+  embedded, ...).
 - getajob.careers (Israeli tech-lead listings), Drushim.co.il
 - Any other board reachable without login. Indeed and Glassdoor block
-  automated access; Comeet needs per-company tokens.
+  automated access; Comeet needs per-company tokens; IAI's own site
+  (jobs.iai.co.il) blocks bots, so IAI roles come via LinkedIn.
 
-The coded `job_matcher run` only covers Greenhouse, Lever and RemoteOK, so a
-round produced by hand must add the other sources itself. Deduplicate against
+The coded `job_matcher run` covers Greenhouse, Lever, RemoteOK and Elbit, so
+a round produced by hand must add LinkedIn and the other boards itself. Deduplicate against
 all earlier `reports/*.md` and use the Strong / Possible / Weak fit layout
 described above.
 
@@ -117,6 +128,10 @@ python -m job_matcher.cli run --limit 5 -v
 - **RemoteOK**: set `remoteok.enabled: true` and list tags (e.g. `backend`,
   `senior`) under `remoteok.tags`; RemoteOK is a single shared feed, so this
   is more of a broad supplement than a per-company source.
+- **Elbit Systems**: set `elbit.enabled: true` and list the regions to keep
+  under `elbit.areas` (feed values: Center, Sharon, Shfela, North, Haifa,
+  South, Jerusalem Area). `elbit.max_jobs` overrides `max_jobs_per_source`,
+  since the feed holds hundreds of postings.
 
 Other boards with a public, unauthenticated JSON API (e.g. Ashby,
 SmartRecruiters) can be added the same way -- drop a new module in
