@@ -54,18 +54,34 @@
     5+ yrs, C++ or another modern language, BSc; real-time financial systems.
     https://il.linkedin.com/jobs/view/4479935244
 
+### Team/Tech Lead, no specific SW language
+
+12. **Amazon (AWS)** — Tech Lead Eng, AWS Transform (Agentic AI) — Tel Aviv
+    5+ yrs SW dev, 5+ yrs in "at least one" language (none named), 5+ yrs leading design/architecture, tech-lead/mentoring experience. ML/LLM fundamentals only preferred.
+    https://www.amazon.jobs/en/jobs/10561447/tech-lead-eng-aws-transform-agentic-ai
+
 ## Weak fit
 
 ### C++ Senior
 
-12. **DuckDuckGo** — Senior C++ Engineer — Ramat Gan / remote-first
+13. **DuckDuckGo** — Senior C++ Engineer — Ramat Gan / remote-first
     7+ yrs. Gap: advanced modern C++ (C++23+) is a core must; Chromium-based browser.
     https://il.linkedin.com/jobs/view/4478422834
 
-13. **Cisco** — Senior C++ Software Engineer — Tel Aviv
+14. **Cisco** — Senior C++ Software Engineer — Tel Aviv
     5+ yrs SW, 3+ yrs C++. Gap: Silicon One ASIC software domain (C++ / embedded / ASIC knowledge as alternatives).
     https://il.linkedin.com/jobs/view/4414946724
 
-14. **NVIDIA** — Senior C++ Software Engineer (networking acceleration) — Tel Aviv District
+15. **NVIDIA** — Senior C++ Software Engineer (networking acceleration) — Tel Aviv District
     5+ yrs C/C++, networking protocols, Linux. Gap: work is a kernel-bypass user-space TCP/IP stack down to NIC hardware (kernel/driver only an advantage).
     https://il.linkedin.com/jobs/view/4403682418
+
+16. **Nebius** — Senior Software Engineer, Web Rendering (Chromium) — Israel (hybrid/remote)
+    5+ yrs, strong C++ in a large performance-critical codebase. Gap: deep Chromium/Blink internals and browser-fleet profiling expected.
+    https://careers.nebius.com/?gh_jid=4941966101
+
+### Team/Tech Lead, no specific SW language
+
+17. **Nominal** — Lead Engineer — Tel Aviv (hybrid)
+    7+ yrs backend/distributed systems, SQL, data/event pipelines; no language required (Python only preferred). Gap: senior hands-on lead, no direct reports; posted ~8 weeks ago.
+    https://www.comeet.com/jobs/nominal/E8.003/lead-engineer/D5.276

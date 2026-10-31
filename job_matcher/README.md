@@ -40,6 +40,26 @@ No scraping, no browser automation, no ToS-risky sites -- only official
 public JSON APIs that Greenhouse, Lever, and RemoteOK expose for their job
 boards.
 
+## Round reports (`reports/*-roundN.md`) — mandatory rules
+
+Each round report **MUST** combine the results of **all** accessible job
+sources in a **single** report file. Never produce a LinkedIn-only round, and
+never split one round into separate per-platform reports. Sources to cover
+every round:
+
+- LinkedIn job search pages and postings
+- Greenhouse public board API for Israeli tech companies
+  (`boards-api.greenhouse.io/v1/boards/<token>/jobs?content=true`)
+- Lever public postings API (`api.lever.co/v0/postings/<company>`)
+- getajob.careers (Israeli tech-lead listings), Drushim.co.il
+- Any other board reachable without login. Indeed and Glassdoor block
+  automated access; Comeet needs per-company tokens.
+
+The coded `job_matcher run` only covers Greenhouse, Lever and RemoteOK, so a
+round produced by hand must add the other sources itself. Deduplicate against
+all earlier `reports/*.md` and use the Strong / Possible / Weak fit layout
+described above.
+
 ## Setup
 
 ```bash
