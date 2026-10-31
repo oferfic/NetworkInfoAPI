@@ -14,8 +14,11 @@ section.
 3. `job_matcher run` fetches postings, sends each one (title + full
    description) to Claude alongside your profile, and asks it to locate the
    requirements section, compare it to your background, and rate the fit.
-4. You get a Markdown report (and optionally raw JSON) ranked by score,
-   with per-posting matched requirements, gaps, and preference notes.
+4. You get a Markdown report (and optionally raw JSON), grouped by fit
+   level (Strong / Possible / Weak) and, within each, by category (C++
+   Team/Tech Lead, C++ Senior, Team/Tech Lead with no specific SW language),
+   ranked by score, with per-posting matched requirements, gaps, and
+   preference notes. Empty levels/categories are omitted.
 
 Postings that explicitly require something you've hard-excluded (via
 `hard_exclude_requirements` in `profile.yaml`, e.g. `embedded`, `DSP`,
@@ -23,12 +26,15 @@ Postings that explicitly require something you've hard-excluded (via
 anywhere -- see the comments in `profile.example.yaml`.
 
 An optional `language_gate` in `profile.yaml` keeps a posting only if it
-requires one of your `required_languages` (e.g. C++) **or** -- with
+requires one of your `required_languages` (e.g. C++) and is a team/tech lead
+role -- or, with `allow_senior_engineer_roles: true`, a senior software
+engineer/developer role -- **or** -- with
 `allow_language_agnostic_leadership: true` -- it's a team/tech lead role
 whose requirements name no programming language at all. Postings that name
 only other languages are dropped the same way as hard exclusions. Hard
-exclusions apply to both paths, so a lead role with no language requirement
-is still dropped if it requires kernel, system-level, or OS/Windows internals work.
+exclusions apply to all paths, so a lead or senior role is still dropped if
+it *requires* kernel, system-level, or OS/Windows internals work (as a
+nice-to-have it's fine).
 
 No scraping, no browser automation, no ToS-risky sites -- only official
 public JSON APIs that Greenhouse, Lever, and RemoteOK expose for their job

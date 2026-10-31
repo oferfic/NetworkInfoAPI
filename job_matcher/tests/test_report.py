@@ -75,21 +75,69 @@ class WriteMarkdownTest(unittest.TestCase):
         self.assertIn("Backend Engineer @ Acme", text)
         self.assertNotIn("Sales Manager", text)
 
-    def test_language_agnostic_leadership_is_flagged(self):
-        agnostic = MatchResult(
-            job=_job(id="1", title="R&D Team Lead"),
-            score=70,
-            verdict="possible_fit",
-            qualified_via="language_agnostic_leadership",
-        )
-        cpp = MatchResult(
-            job=_job(id="2", title="C++ Team Lead"),
+    def test_grouped_by_fit_level_then_category(self):
+        results = [
+            MatchResult(
+                job=_job(id="1", title="R&D Team Lead"),
+                score=70,
+                verdict="possible_fit",
+                qualified_via="language_agnostic_leadership",
+            ),
+            MatchResult(
+                job=_job(id="2", title="C++ Team Lead"),
+                score=80,
+                verdict="strong_fit",
+                qualified_via="required_language_lead",
+            ),
+            MatchResult(
+                job=_job(id="3", title="Senior C++ Engineer"),
+                score=78,
+                verdict="strong_fit",
+                qualified_via="required_language_senior",
+            ),
+            MatchResult(
+                job=_job(id="4", title="C++ Tech Lead"),
+                score=45,
+                verdict="weak_fit",
+                qualified_via="required_language_lead",
+            ),
+        ]
+        text = self._write(results)
+        order = [
+            "## Strong fit",
+            "### C++ Team/Tech Lead",
+            "C++ Team Lead @ Acme",
+            "### C++ Senior",
+            "Senior C++ Engineer @ Acme",
+            "## Possible fit",
+            "### Team/Tech Lead, no specific SW language",
+            "R&D Team Lead @ Acme",
+            "## Weak fit",
+            "C++ Tech Lead @ Acme",
+        ]
+        positions = [text.index(s) for s in order]
+        self.assertEqual(positions, sorted(positions))
+
+    def test_empty_levels_and_categories_are_omitted(self):
+        only = MatchResult(
+            job=_job(),
             score=80,
             verdict="strong_fit",
-            qualified_via="required_language",
+            qualified_via="required_language_senior",
         )
-        text = self._write([agnostic, cpp])
-        self.assertEqual(text.count("No specific programming language required"), 1)
+        text = self._write([only])
+        self.assertIn("### C++ Senior", text)
+        self.assertNotIn("Possible fit", text)
+        self.assertNotIn("Weak fit", text)
+        self.assertNotIn("C++ Team/Tech Lead", text)
+        self.assertNotIn("no specific SW language", text)
+
+    def test_legacy_required_language_counts_as_lead(self):
+        old = MatchResult(
+            job=_job(), score=80, verdict="strong_fit", qualified_via="required_language"
+        )
+        text = self._write([old])
+        self.assertIn("### C++ Team/Tech Lead", text)
 
     def test_title_includes_round_number(self):
         kept = MatchResult(job=_job(), score=80, verdict="strong_fit")

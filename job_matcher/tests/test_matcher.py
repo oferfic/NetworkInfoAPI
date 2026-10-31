@@ -164,6 +164,25 @@ class MatcherTest(unittest.TestCase):
         self.assertEqual(result.qualified_via, "language_agnostic_leadership")
 
     @mock.patch("job_matcher.matcher.anthropic.Anthropic")
+    def test_evaluate_parses_cpp_senior_and_weak_fit(self, mock_anthropic_cls):
+        mock_client = mock.Mock()
+        mock_client.messages.create.return_value = _text_response(
+            {
+                "excluded": False,
+                "qualified_via": "required_language_senior",
+                "score": 48,
+                "verdict": "weak_fit",
+            }
+        )
+        mock_anthropic_cls.return_value = mock_client
+
+        matcher = Matcher(self.profile, api_key="test-key")
+        result = matcher.evaluate(_job(title="Senior C++ Engineer"))
+
+        self.assertEqual(result.qualified_via, "required_language_senior")
+        self.assertEqual(result.verdict, "weak_fit")
+
+    @mock.patch("job_matcher.matcher.anthropic.Anthropic")
     def test_evaluate_marks_language_gate_failure_excluded(self, mock_anthropic_cls):
         mock_client = mock.Mock()
         mock_client.messages.create.return_value = _text_response(

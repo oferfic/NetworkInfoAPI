@@ -108,11 +108,12 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     strong = sum(1 for r in results if r.verdict == "strong_fit")
     possible = sum(1 for r in results if r.verdict == "possible_fit")
+    weak = sum(1 for r in results if r.verdict == "weak_fit")
     excluded = sum(1 for r in results if r.excluded)
     errors = sum(1 for r in results if not r.ok)
     print(
         f"Done. {len(results)} evaluated: {strong} strong fit, "
-        f"{possible} possible fit, {excluded} hard-excluded, "
+        f"{possible} possible fit, {weak} weak fit, {excluded} hard-excluded, "
         f"{errors} errors. Report (round {round_num}): {output_path}"
     )
     return 0

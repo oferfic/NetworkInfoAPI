@@ -50,7 +50,12 @@ a one-sentence reasoning). Otherwise set "excluded": false and continue.
 posting passes if EITHER:
   (a) its requirements ask for at least one of language_gate.required_languages \
 -- anywhere in the requirements, even as a nice-to-have/advantage (score it lower \
-if it's not a hard requirement). Set "qualified_via": "required_language". OR
+if it's not a hard requirement) -- AND the role is either a team lead / tech lead \
+/ engineering manager of an R&D team (set "qualified_via": \
+"required_language_lead"), or, if language_gate.allow_senior_engineer_roles is \
+true, a senior software engineer/developer individual-contributor role (set \
+"qualified_via": "required_language_senior"). Junior/mid-level roles don't pass \
+via (a). OR
   (b) language_gate.allow_language_agnostic_leadership is true, the role is a \
 team lead / tech lead / engineering manager of an R&D team, and its requirements \
 name NO specific programming language at all (generic phrases like "strong \
@@ -60,9 +65,9 @@ A posting that names programming languages but none of required_languages \
 (e.g. only Python/Java/Go) fails the gate. If it fails, set "excluded": true, \
 "excluded_because": "Language gate: <short reason>", "qualified_via": null, \
 "score": 0, "verdict": "not_fit", and skip steps 1-5 as in step 0. Step 0's \
-hard exclusions apply to both paths -- a posting with no language requirement \
-that still requires e.g. kernel, system-level, or Windows/OS internals work \
-must already have been excluded in step 0, never passed via (b). With no language_gate section, set \
+hard exclusions apply to all paths -- a posting (lead or senior) that still \
+requires e.g. kernel, system-level, or Windows/OS internals work must already \
+have been excluded in step 0, never passed via (a) or (b). With no language_gate section, set \
 "qualified_via": null and continue.
 1. Locate the requirements/qualifications section within the job description \
 (it may be labeled "Requirements", "Qualifications", "What you'll need", \
@@ -75,7 +80,8 @@ If there's no distinct section, treat the whole description as the requirements 
 and anything else they listed) as far as the posting actually reveals them. \
 Do not penalize the posting for preference information it simply doesn't mention.
 4. Score overall fit 0-100 and pick a verdict: "strong_fit" (score >= 75), \
-"possible_fit" (45-74), or "not_fit" (< 45).
+"possible_fit" (55-74), "weak_fit" (40-54: relevant but with notable gaps), \
+or "not_fit" (< 40).
 5. Be specific and honest -- name real gaps instead of flattering. If the \
 description doesn't give you enough to judge something, say so in reasoning \
 rather than guessing.
@@ -84,9 +90,9 @@ Respond with ONLY a single JSON object -- no prose outside it, no markdown fence
 {
   "excluded": <bool>,
   "excluded_because": <string, or null if not excluded>,
-  "qualified_via": "required_language" | "language_agnostic_leadership" | null,
+  "qualified_via": "required_language_lead" | "required_language_senior" | "language_agnostic_leadership" | null,
   "score": <integer 0-100>,
-  "verdict": "strong_fit" | "possible_fit" | "not_fit",
+  "verdict": "strong_fit" | "possible_fit" | "weak_fit" | "not_fit",
   "matched_requirements": [<short strings: requirements the candidate clearly meets>],
   "missing_requirements": [<short strings: requirements the candidate likely doesn't meet or that are unclear>],
   "preference_notes": [<short strings: how the posting lines up with stated preferences>],
